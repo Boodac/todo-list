@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "boodaC.toDo",
   "scripts": {
-    "test": "echo \"test\""
+    "test": "echo boodaC.toDo",
+    "build": "webpack",
+    "dev": "webpack serve",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
