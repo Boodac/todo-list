@@ -1,0 +1,22 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "boodaC.toDo",
+  "scripts": {
+    "test": "echo \"test\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boodac/todo-list.git"
+  },
+  "author": "boodaC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boodac/todo-list/issues"
+  },
+  "homepage": "https://github.com/boodac/todo-list#readme",
+  "devDependencies": {
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
