@@ -29,3 +29,7 @@
   #root, #__next {
     isolation: isolate;
   }
+
+  li {
+    list-style: none;
+  }
