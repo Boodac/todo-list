@@ -6,7 +6,7 @@ const schema = {
     priority: "normal",
     due: "any",
     children: [],
-    parent: [],
+    parents: [],
     status: "incomplete",
     refID: false,
     autodelete: true,
