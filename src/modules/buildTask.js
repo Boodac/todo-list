@@ -6,7 +6,7 @@ import {conformTaskToSchema} from "./conformTask.js";
 // will gracefully accept any JSON or JS object.
 // do not use this to edit tasks! use the changetask module instead.
  
-export default function (obj = structuredClone(schema)) {
+export default function (obj = schema) {
     let taskStructure = {};
     let assignNewID = false;
 

@@ -1,4 +1,4 @@
-import buildTask from "../modules/buildtask.js";
+import buildTask from "../modules/buildTask.js";
 
 const task = buildTask().setTitle("friends!").result();
 

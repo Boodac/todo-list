@@ -1,4 +1,4 @@
-export default {
+const schema = {
     title: "",
     description: "",
     notes: "",
@@ -11,3 +11,5 @@ export default {
     refID: false,
     autodelete: true,
 };
+
+export default Object.freeze(structuredClone(schema));
