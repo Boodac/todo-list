@@ -12,14 +12,15 @@ export default function (obj = structuredClone(schema)) {
 
     if(typeof obj === "string") {
         taskStructure = JSON.parse(obj);
-    }
+    };
     else {
         taskStructure = conformTaskToSchema(obj);
         assignNewID = true;
-    }
+    };
+    
+    const refID = UUID();
 
     const factory = {
-        refID: UUID(),
         task: structuredClone(taskStructure),
         
         setTitle(value) {
@@ -65,7 +66,7 @@ export default function (obj = structuredClone(schema)) {
         result() {
             if(assignNewID) {
                 Object.defineProperty(this.task, "refID", {
-                    value: this.refID,
+                    value: refID,
                     enumerable: true,
                     configurable: false,
                     writable: false
