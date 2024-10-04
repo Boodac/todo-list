@@ -23,6 +23,7 @@ aside {
 .icon-container {
   display: grid;
   grid-template-columns: 2rem 1fr;
+  grid-template-rows: 2rem;
   align-items: center;
   gap: 1rem;
   margin-left: 1rem;
@@ -31,12 +32,16 @@ aside {
 
 ul > .icon-container:hover {
   cursor: pointer;
-  box-shadow: -1px 0 0 rgb(75, 181, 252);
-  grid-template-columns:calc(2rem + 1px) 1fr;
-  font-weight: bold;
+  box-shadow: -1px 0 2px rgb(75, 181, 252), 
+              1px 1px 1px rgba(0,0,0,0.4);
+  font-weight: 500;
 }
 
 nav > .icon-container {
   margin: inherit;
   grid-template-columns: 3rem 1fr;
+}
+
+.icon {
+  aspect-ratio: 1;
 }
