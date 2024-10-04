@@ -31,7 +31,7 @@ aside {
 
 ul > .icon-container:hover {
   cursor: pointer;
-  box-shadow: 1px 0 0 rgb(75, 181, 252);
+  box-shadow: -1px 0 0 rgb(75, 181, 252);
   grid-template-columns:calc(2rem + 1px) 1fr;
   font-weight: bold;
 }
