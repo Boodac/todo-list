@@ -1,28 +1,25 @@
 import { v4 as UUID } from "uuid";
 import schema from "./schema.js";
+import {conformTaskToSchema} from "./conformTask.js";
 
 // converts an object into a frozen Task object that includes a convert() method to parse itself back into JSON.
-// will gracefully accept any JSON or JS object
-// do not use this to edit tasks! it will just silently fail by creating new UIDs. use the changetask module instead.
+// will gracefully accept any JSON or JS object.
+// do not use this to edit tasks! use the changetask module instead.
 
-export default function buildTask(obj = structuredClone(schema)) {
-    const refID = UUID();
+export default function (obj = structuredClone(schema)) {
     let taskStructure = {};
+    let assignNewID = false;
 
     if(typeof obj === "string") {
         taskStructure = JSON.parse(obj);
     }
     else {
-        let clone = {};
-        for(const parameter in schema) {
-            if(parameter === "refID") continue;
-            if(obj[parameter]) clone[parameter] = obj[parameter];
-            else clone[parameter] = schema[parameter];
-        }
-        taskStructure = clone;
+        taskStructure = conformTaskToSchema(obj);
+        assignNewID = true;
     }
 
     const factory = {
+        refID: UUID(),
         task: structuredClone(taskStructure),
         
         setTitle(value) {
@@ -66,7 +63,14 @@ export default function buildTask(obj = structuredClone(schema)) {
             return this;
         },
         result() {
-            if(!this.task.refID) this.task.refID = refID;
+            if(assignNewID) {
+                Object.defineProperty(this.task, "refID", {
+                    value: this.refID,
+                    enumerable: true,
+                    configurable: false,
+                    writable: false
+                });
+            };
             Object.defineProperty(this.task, "convertToJSON", {
                 value: function() {
                     return JSON.stringify(this);
