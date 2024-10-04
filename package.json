@@ -8,7 +8,6 @@
     "dev": "webpack serve",
     "pagebranch": "git checkout gh-pages && git merge main --no-edit",
     "deploycommit": "git add dist -f && git commit -m 'Deployment commit'",
-    "predeploy": "npm run pagebranch && npm run deploycommit",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "postdeploy": "git checkout main"
   },
