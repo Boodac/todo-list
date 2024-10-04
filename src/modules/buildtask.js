@@ -12,7 +12,7 @@ export default function (obj = structuredClone(schema)) {
 
     if(typeof obj === "string") {
         taskStructure = JSON.parse(obj);
-    };
+    }
     else {
         taskStructure = conformTaskToSchema(obj);
         assignNewID = true;
