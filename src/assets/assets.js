@@ -7,5 +7,5 @@ import upcoming from "./icons/upcoming.svg";
 
 export const Icons = {addTask, filters, myTasks, settings, today, upcoming};
 
-export * from "./resets.css";
-export * from "./styles.css";
+export * as reset from "./resets.css";
+export * as css from "./styles.css";
