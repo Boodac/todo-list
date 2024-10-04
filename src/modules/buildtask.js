@@ -1,34 +1,25 @@
 import { v4 as UUID } from "uuid";
+import schema from "./schema.js";
 
-const schema = {
-    title: "",
-    description: "",
-    notes: "",
-    frequency: "once",
-    priority: "normal",
-    due: "any",
-    children: [],
-    parents: [],
-    status: "incomplete",
-    refID: false,
-    autodelete: true,
-};
-
-// takes ANY object and converts it into a frozen Task object that includes a convert() method to parse itself back into JSON.
-// will gracefully accept any JSON
-// do not use this to edit tasks! it will just create copies. use the changetask module.
+// converts an object into a frozen Task object that includes a convert() method to parse itself back into JSON.
+// will gracefully accept any JSON or JS object
+// do not use this to edit tasks! it will just silently fail by creating new UIDs. use the changetask module instead.
 
 export default function buildTask(obj = structuredClone(schema)) {
     const refID = UUID();
     let taskStructure = {};
+
     if(typeof obj === "string") {
         taskStructure = JSON.parse(obj);
-    };
-
-    for(const parameter in schema) {
-        if(parameter === "refID") continue;
-        if(obj[parameter] === undefined) taskStructure[parameter] = schema[parameter];
-        else taskStructure[parameter] = obj[parameter];
+    }
+    else {
+        let clone = {};
+        for(const parameter in schema) {
+            if(parameter === "refID") continue;
+            if(obj[parameter]) clone[parameter] = obj[parameter];
+            else clone[parameter] = schema[parameter];
+        }
+        taskStructure = clone;
     }
 
     const factory = {
@@ -76,13 +67,13 @@ export default function buildTask(obj = structuredClone(schema)) {
         },
         result() {
             if(!this.task.refID) this.task.refID = refID;
-            Object.defineProperty(this.task, "convert", {
+            Object.defineProperty(this.task, "convertToJSON", {
                 value: function() {
                     return JSON.stringify(this);
                 },
                 enumerable: false,
                 configurable: false,
-                writable: false,
+                writable: false
             });
             return Object.freeze(this.task);
         },
