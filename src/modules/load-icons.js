@@ -5,7 +5,7 @@ export default function() {
     elements.today.src = Icons.today;
     elements.upcoming.src = Icons.upcoming;
     elements.settings.src = Icons.settings;
-    elements.filters.src = Icons.settings;
+    elements.filters.src = Icons.filters;
     elements.myTasks.src = Icons.myTasks;
 }
 

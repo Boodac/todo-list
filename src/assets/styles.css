@@ -4,9 +4,30 @@ body {
   grid-template-columns: max-content 1fr;
 }
 
+body > * {
+  padding: 1rem;
+}
+
 aside {
   background-color: #5c15df;
   min-height: 100vh;
   min-height: 100dvh;
   color: white;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content;
+}
+
+.icon-container {
+  display: grid;
+  margin-bottom: 0.5rem;
+  grid-template-columns: 2rem 1fr;
+  align-items: center;
+  gap: 1.125rem;
+  margin-left: 1rem;
+}
+
+nav > .icon-container {
+  margin: inherit;
+  grid-template-columns: 3rem 1fr;
 }
