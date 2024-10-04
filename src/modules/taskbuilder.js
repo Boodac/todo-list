@@ -66,9 +66,6 @@ export default function buildTask(obj = schema) {
         setAutoDelete(bool) {
             bool ? task.autodelete = true : task.autodelete = false;
         },
-        toggleAutoDelete() {
-            task.autodelete ? task.autodelete = false : task.autodelete = true;
-        }
     }
 
     return factory;
