@@ -1,1 +1,1 @@
-import * as css from "./assets/styles.css";
+import { css, Icons } from "./assets/assets.js";
