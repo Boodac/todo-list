@@ -5,7 +5,7 @@ import {conformTaskToSchema} from "./conformTask.js";
 // converts an object into a frozen Task object that includes a convert() method to parse itself back into JSON.
 // will gracefully accept any JSON or JS object.
 // do not use this to edit tasks! use the changetask module instead.
-
+ 
 export default function (obj = structuredClone(schema)) {
     let taskStructure = {};
     let assignNewID = false;
