@@ -34,7 +34,11 @@ ul > .icon-container:hover {
   cursor: pointer;
   box-shadow: -1px 0 2px rgb(75, 181, 252), 
               1px 1px 1px rgba(0,0,0,0.4);
-  font-weight: 500;
+  font-weight: 600;
+}
+
+ul > .icon-container:active {
+  font-weight: 900;
 }
 
 nav > .icon-container {
