@@ -1,3 +1,5 @@
+import { v4 as UUID } from "uuid";
+
 const schema = {
     title: "",
     description: "",
@@ -12,19 +14,25 @@ const schema = {
     autodelete: true,
 };
 
+// takes ANY object and converts it into a frozen Task object that includes a convert() method to parse itself back into JSON.
+// will gracefully accept any JSON
+// do not use this to edit tasks! it will just create copies. use the changetask module.
+
 export default function buildTask(obj = structuredClone(schema)) {
-    if(obj!==schema) {
-        const clone = {};
-        for(const parameter in schema) {
-            if(obj[parameter] === undefined) clone[parameter] = schema[parameter];
-            else clone[parameter] = obj[parameter];
-        }
-        obj = clone;
+    const refID = UUID();
+    let taskStructure = {};
+    if(typeof obj === "string") {
+        taskStructure = JSON.parse(obj);
     };
-    if(obj.refID === false) obj.refID = Math.random();
+
+    for(const parameter in schema) {
+        if(parameter === "refID") continue;
+        if(obj[parameter] === undefined) taskStructure[parameter] = schema[parameter];
+        else taskStructure[parameter] = obj[parameter];
+    }
 
     const factory = {
-        task: structuredClone(obj),
+        task: structuredClone(taskStructure),
         
         setTitle(value) {
             this.task.title = value;
@@ -67,9 +75,18 @@ export default function buildTask(obj = structuredClone(schema)) {
             return this;
         },
         result() {
+            if(!this.task.refID) this.task.refID = refID;
+            Object.defineProperty(this.task, "convert", {
+                value: function() {
+                    return JSON.stringify(this);
+                },
+                enumerable: false,
+                configurable: false,
+                writable: false,
+            });
             return Object.freeze(this.task);
         },
     }
 
     return factory;
-}
+};
