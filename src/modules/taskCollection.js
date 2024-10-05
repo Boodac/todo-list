@@ -1,73 +1,103 @@
-function createFlatCollection(map = new Map()) {
-    const flatCollection = {
-        idMap: map,
-        find(refID) {
-            if(this.idMap.has(refID)) {
-                return this.idMap.get(refID);
-            }
-            else return undefined;
+function createTaskCollection() {
+    const idMap = new Map();
+    const RootCollection = {
+        children: [],
+        refID: 1,
+        removeChild(taskObject) {
+            this.children.filter(task => task !== taskObject);
         },
-        add(taskObject) {
-            this.idMap.set(taskObject.refID, taskObject);
-        },
-        remove(taskObject) {
-            this.idMap.delete(taskObject.refID);
-        },
-        list() {
-            return this.idMap.values();
-        },
+        addChild(taskObject) {
+            if(this.children.indexOf(taskObject) === -1) this.children.push(taskObject);
+        }
     };
 
-    return flatCollection;
-}
+    const get = (refID) => {
+        if(this.idMap.has(refID)) return this.idMap.get(refID);
+        else return undefined;
+    };
 
-const flatCollection = createFlatCollection();
+    const add = (taskObject) => {
+        if(typeof taskObject !== "object") throw new Error(`Cannot add ${typeof taskObject} to task collection`);
+        this.idMap.set(taskObject.refID, taskObject);
+        if(taskObject.refID === 1) return this;
 
-const rootCollection = {
-    children: [],
-    refID: 1
-};
-
-flatCollection.add(rootCollection);
-
-function linkTree(flat = flatCollection, root = rootCollection) {
-    for(const referenceID of flat) {
-        const taskObject = flat.get(referenceID);
-
-        if(taskObject.children.length > 0) {
-            taskObject.children.forEach(child => {
-                const childTaskObject = flat.find(child);
-                if(childTaskObject) child = childTaskObject;
+        const parents = this.getParentsOf(taskObject);
+        if(taskObject.parents.length === 0) {
+            this.RootCollection.addChild(taskObject);
+            parents.push(1);
+        } else {
+            parents.forEach((parentID) => {
+                if(parentID === 1) {
+                    this.RootCollection.addChild(taskObject);
+                };
             });
         };
+        return this;
+    }
 
-        if(taskObject.parents.length > 0) {
-            taskObject.parents.forEach(parent => {
-                const parentTaskObject = flat.find(parent);
-                if(parentTaskObject) parent = parentTaskObject;
-            });
+    const remove = (task) => {
+        if(typeof task === "string") {
+            this.removeById(task);
+            return this;
+        };
+        this.idMap.delete(task.refID);
+        if(task.parents.length === 0) {
+            this.RootCollection.removeChild(task);
         } else {
-            taskObject.parents[0] = root;
-        }
+            task.parents.forEach((parentID) => {
+                if(parentID === 1) {
+                    this.RootCollection.removeChild(task);
+                };
+            });
+        };
+        return this;
     };
-    return flat;
+
+    const getParentsOf = (task) => {
+        if(typeof task === "string") task = this.getById(task);
+        const parentIDsArray = [...task.parents];
+        const parentObjectArray = [];
+
+        parentIDsArray.forEach(parentID => {
+            const parentTaskObject = this.getById(parentID);
+            parentObjectArray.push(parentTaskObject);
+        });
+
+        return parentObjectArray;
+    };
+
+    const getChildrenOf = (task) => {
+        if(typeof task === "string") task = this.getById(task);
+        const childrenIDsArray = [...task.children];
+        const childrenObjectsArray = [];
+
+        childrenIDsArray.forEach(childID => {
+            if(childID === 1) return;
+            const childTaskObject = this.getById(childID);
+            childrenObjectsArray.push(childTaskObject);
+        });
+
+        return childrenObjectsArray;
+    };
+
+    const flatten = () => {
+        const fullCollection = [];
+
+        this.remove(RootCollection);
+
+        const taskArray = [...idMap.values()];
+
+        taskArray.forEach(task => {
+            task = task.convertToJson();
+            fullCollection.push(task);
+        });
+
+        return fullCollection;
+    };
+
+    add(RootCollection);
+
+    return { get, add, remove, getParentsOf, getChildrenOf, flatten }
 };
 
-function flattenTree(flat = flatCollection) {
-    for(const taskObject in flat.list()) {
-        if(taskObject.children.length > 0) {
-            taskObject.children.forEach(child => {
-                const childID = child.refID;
-                child = childID;
-            });
-        }
-        
-        if(taskObject.parents.length > 0) {
-            taskObject.parents.forEach(parent => {
-                const parentID = parent.refID;
-                parent = parentID;
-            })
-        }
-    }
-    return flat;
-}; 
+export default createTaskCollection();
