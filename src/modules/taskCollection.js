@@ -1,5 +1,6 @@
 function createTaskCollection() {
     const idMap = new Map();
+    const objMap = new Map();
     const RootCollection = {
         children: [],
         refID: 1,
@@ -19,15 +20,16 @@ function createTaskCollection() {
     const add = (taskObject) => {
         if(typeof taskObject !== "object") throw new Error(`Cannot add ${typeof taskObject} to task collection`);
         this.idMap.set(taskObject.refID, taskObject);
-        if(taskObject.refID === 1) return this;
+        this.objMap.set(taskObject, yieldChildrenOf(taskObject));
+        if(taskObject.refID === RootCollection.refID) return;
 
-        const parents = this.getParentsOf(taskObject);
+        const parents = yieldParentsOf(taskObject);
         if(taskObject.parents.length === 0) {
             this.RootCollection.addChild(taskObject);
-            parents.push(1);
+            parents.push(RootCollection.refID);
         } else {
             parents.forEach((parentID) => {
-                if(parentID === 1) {
+                if(parentID === RootCollection.refID) {
                     this.RootCollection.addChild(taskObject);
                 };
             });
@@ -37,10 +39,10 @@ function createTaskCollection() {
 
     const remove = (task) => {
         if(typeof task === "string") {
-            this.removeById(task);
-            return this;
+            return removeById(task);
         };
         this.idMap.delete(task.refID);
+        this.objMap.delete(task);
         if(task.parents.length === 0) {
             this.RootCollection.removeChild(task);
         } else {
@@ -51,10 +53,19 @@ function createTaskCollection() {
             });
         };
         return this;
+    }
+
+    function removeById(refID) {
+        if(refID === 1) throw new Error("cannot remove the root");
+        let taskObject = {};
+        if(typeof refID === "object") taskObject = refID;
+        else taskObject = this.getById(refID);
+        
+        return this.remove(taskObject);
     };
 
-    const getParentsOf = (task) => {
-        if(typeof task === "string") task = this.getById(task);
+    function yieldParentsOf(task) {
+        if(typeof task === "string") task = this.get(task);
         const parentIDsArray = [...task.parents];
         const parentObjectArray = [];
 
@@ -66,9 +77,8 @@ function createTaskCollection() {
         return parentObjectArray;
     };
 
-    const getChildrenOf = (task) => {
-        if(typeof task === "string") task = this.getById(task);
-        const childrenIDsArray = [...task.children];
+    function yieldChildrenOf(taskObject) {
+        const childrenIDsArray = [...taskObject.children];
         const childrenObjectsArray = [];
 
         childrenIDsArray.forEach(childID => {
@@ -78,6 +88,12 @@ function createTaskCollection() {
         });
 
         return childrenObjectsArray;
+    };
+
+    const getChildrenOf = (task) => {
+        if(typeof task === "string") task = this.get(task);
+
+        return objMap.get(task);
     };
 
     const flatten = () => {
@@ -97,7 +113,7 @@ function createTaskCollection() {
 
     add(RootCollection);
 
-    return { get, add, remove, getParentsOf, getChildrenOf, flatten }
+    return { get, add, remove, getChildrenOf, flatten }
 };
 
 export default createTaskCollection();
