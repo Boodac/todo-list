@@ -2,8 +2,8 @@ import { v4 as UUID } from "uuid";
 import schema from "./schema.js";
 import {conformTaskToSchema} from "./conformTask.js";
 
-// converts an object into a frozen Task object that includes a convert() method to parse itself back into JSON.
-// will gracefully accept any JSON or JS object.
+// instantiates a frozen Task object that includes a convert() method to parse itself back into JSON.
+// will gracefully accept any JSON or JS object as a template and conform it to the schema.
 // do not use this to edit tasks! use the changetask module instead.
  
 export default function (obj = schema) {
@@ -21,58 +21,58 @@ export default function (obj = schema) {
     const refID = UUID();
 
     const factory = {
-        task: structuredClone(taskStructure),
+        taskObject: structuredClone(taskStructure),
         
         setTitle(value) {
-            this.task.title = value;
+            this.taskObject.title = value;
             return this;
         },
         setDescription(value) {
-            this.task.description = value;
+            this.taskObject.description = value;
             return this;
         },
         setNotes(value) {
-            this.task.notes = value;
+            this.taskObject.notes = value;
             return this;
         },
         setFrequency(value) {
-            this.task.frequency = value;
+            this.taskObject.frequency = value;
             return this;
         },
         setPriority(value) {
-            this.task.priority = value;
+            this.taskObject.priority = value;
             return this;
         },
         setDueDate(value) {
-            this.task.dueDate = value;
+            this.taskObject.dueDate = value;
             return this;
         },
         setChildren(value) {
-            this.task.children = value;
+            this.taskObject.children = value;
             return this;
         },
         setParents(value) {
-            this.task.parents = value;
+            this.taskObject.parents = value;
             return this;
         },
         setStatus(value) {
-            this.task.status = value;
+            this.taskObject.status = value;
             return this;
         },
         setAutoDelete(value) {
-            this.task.autodelete = value;
+            this.taskObject.autodelete = value;
             return this;
         },
         result() {
             if(assignNewID) {
-                Object.defineProperty(this.task, "refID", {
+                Object.defineProperty(this.taskObject, "refID", {
                     value: refID,
                     enumerable: true,
                     configurable: false,
                     writable: false
                 });
             };
-            Object.defineProperty(this.task, "convertToJSON", {
+            Object.defineProperty(this.taskObject, "convertToJSON", {
                 value: function() {
                     return JSON.stringify(this);
                 },
@@ -80,7 +80,7 @@ export default function (obj = schema) {
                 configurable: false,
                 writable: false
             });
-            return Object.freeze(this.task);
+            return Object.freeze(this.taskObject);
         },
     }
 
