@@ -1,6 +1,6 @@
 import { v4 as UUID } from "uuid";
-import schema from "./schema.js";
-import {conformTaskToSchema} from "./conformTask.js";
+import { schema } from "./index.js";
+import { conformTaskToSchema } from "./index.js";
 
 // instantiates a frozen Task object that includes a convert() method to parse itself back into JSON.
 // will gracefully accept any JSON or JS object as a template and conform it to the schema.

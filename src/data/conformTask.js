@@ -1,6 +1,6 @@
-import schema from "./schema.js";
+import schema from "./index.js";
 
-export function conformTaskToSchema (taskObject) {
+export default function(taskObject) {
     let clone = {};
     for(const parameter in schema) {
         if(parameter === "refID") continue;
