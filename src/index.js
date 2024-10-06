@@ -1,9 +1,10 @@
-import { css, reset } from "./assets/assets.js";
-import loadIcons from "./modules/iconHandlers.js";
-import * as test from "./tests/testbuildtask.js";
+import { css, reset } from "./assets/index.js";
+import { loadIcons } from "./display/index.js";
+import { initClickHandlers } from "./events/index.js";
 
 if(css && reset) {
     console.log("Load: success.");
 }
 
 loadIcons();
+initClickHandlers();
