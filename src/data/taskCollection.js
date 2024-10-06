@@ -3,7 +3,7 @@ function createTaskCollection() {
     const objMap = new Map();
     const RootCollection = {
         children: [],
-        refID: 1,
+        refID: "1",
         removeChild(taskObject) {
             this.children.filter(task => task !== taskObject);
         },
