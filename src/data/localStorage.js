@@ -1,4 +1,7 @@
+import { configurations } from "./index.js";
+
 const STORAGE_TYPE = "localStorage";
+const TEST_STRING = "{[storage/test]};";
 
 const storage = (function (){
     let reference = {};
@@ -7,9 +10,8 @@ const storage = (function (){
         let store;
         try {
             store = window[STORAGE_TYPE];
-            const testString = "{[storage/test]};";
-            store.setItem(testString, testString);
-            store.removeItem(testString);
+            store.setItem(TEST_STRING, TEST_STRING);
+            store.removeItem(TEST_STRING);
             return true;
         } catch (error) {
             return (error instanceof DOMException && error.name === "QuotaExceededError" && storage && storage.length !== 0);
@@ -17,11 +19,7 @@ const storage = (function (){
     };
 
     const checkConfig = (storageObject) => {
-        if(!storageObject.getItem("config")) initStorage(storageObject);
-    };
-
-    const initStorage = (storageObject) => {
-        
+        if(!storageObject.getItem("current_version")) populate(storageObject);
     };
 
     if(storageVerified()) {
@@ -51,3 +49,12 @@ const storage = (function (){
 
     return reference;
 })();
+
+function populate(storageObject) {
+    storageObject.clear();
+    configurations.forEach(configuration => {
+        storageObject.setItem(configuration[0], configuration[1]);
+    });
+};
+
+export default localStorage;
