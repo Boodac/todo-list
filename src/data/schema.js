@@ -1,4 +1,4 @@
-const schema = {
+export const schema = {
     title: "",
     description: "",
     notes: "",
@@ -7,9 +7,18 @@ const schema = {
     dueDate: "any",
     children: [],
     parents: [],
+    tags: [],
     status: "incomplete",
     refID: false,
     autodelete: true,
 };
 
-export default Object.freeze(structuredClone(schema));
+export function conformTaskToSchema(taskObject) {
+    let clone = {};
+    for(const parameter in schema) {
+        if(parameter === "refID") continue;
+        if(taskObject[parameter]) clone[parameter] = taskObject[parameter];
+        else clone[parameter] = schema[parameter];
+    }
+    return clone;
+}

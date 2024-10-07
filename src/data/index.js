@@ -1,3 +1,4 @@
 
-export * as schema from "./schema.js";
-export * as conformTaskToSchema from "./conformTask.js";
+export { schema, conformTaskToSchema } from "./schema.js";
+export { configurations } from "./config.js";
+export { buildTask } from "./buildTask.js";
