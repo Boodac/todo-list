@@ -3,7 +3,7 @@ import { configurations } from "./index.js";
 const STORAGE_TYPE = "localStorage";
 const TEST_STRING = "{[storage/test]};";
 
-const storageReference = (function (){
+export const storageReference = (function (){
     let reference = {};
 
     const storageVerified = () => {
@@ -56,5 +56,3 @@ function populate(storageObject) {
         storageObject.setItem(configuration[0], configuration[1]);
     });
 };
-
-export default storageReference;
