@@ -5,17 +5,13 @@ const taskCollection = (function () {
     const RootCollection = {
         myTasks: [],
         refID: "myTasks",
-        removeChild(task) {
-            if(typeof task === "string") {
-                task = JSON.parse(task);
-            }
-            this.myTasks.splice(this.myTasks.indexOf(task.refID), 1);
+        removeChild(refID) {
+            this.myTasks = this.myTasks.filter(ID => {
+                return ID === refID;
+            });
         },
-        addChild(task) {
-            if(typeof task === "string") {
-                task = JSON.parse(task);
-            }
-            this.myTasks.push(task.refID);
+        addChild(refID) {
+            this.myTasks.push(refID);
         }
     };
 
@@ -29,10 +25,11 @@ const taskCollection = (function () {
         if(task === "string") task = JSON.parse(task);
 
         if(task.parents.length === 0) {
-            this.RootCollection.addChild(task);
+            this.parents.push(RootCollection.refID);
+            this.RootCollection.addChild(task.refID);
         } else {
             task.parents.forEach((parentID) => {
-                if(parentID === RootCollection.refID) this.RootCollection.addChild(task);
+                if(parentID === RootCollection.refID) this.RootCollection.addChild(task.refID);
             });
         };
     }
