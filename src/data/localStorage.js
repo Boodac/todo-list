@@ -3,7 +3,7 @@ import { configurations } from "./index.js";
 const STORAGE_TYPE = "localStorage";
 const TEST_STRING = "{[storage/test]};";
 
-const storage = (function (){
+const storageReference = (function (){
     let reference = {};
 
     const storageVerified = () => {
@@ -19,7 +19,7 @@ const storage = (function (){
     };
 
     const checkConfig = (storageObject) => {
-        if(!storageObject.getItem("current_version")) populate(storageObject);
+        if(!storageObject.getItem(configurations[0][0]) populate(storageObject);
     };
 
     if(storageVerified()) {
@@ -57,4 +57,4 @@ function populate(storageObject) {
     });
 };
 
-export default localStorage;
+export default storageReference;
