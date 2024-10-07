@@ -32,11 +32,11 @@ export const taskCollection = (function (){
                 if(parentID === RootCollection.refID) RootCollection.addChild(task.refID);
             });
         };
-    }
+    };
 
     const get = (refID) => {
         if(refID === RootCollection.refID) {
-            return { refID: RootCollection.refID, children: RootCollection.myTasks }
+            return { refID: RootCollection.refID, children: RootCollection.myTasks };
         };
         if(idMap.has(refID)) {
             let result = idMap.get(refID);
@@ -67,7 +67,11 @@ export const taskCollection = (function (){
         idMap.set(refID, resultingObject);
     };
 
+    const load = (loaderArray) => {
+        console.log(loaderArray);
+    }
+
     idMap.set(RootCollection.refID, RootCollection.myTasks);
 
-    return { add, get, remove };
+    return { add, get, remove, load };
 })();
