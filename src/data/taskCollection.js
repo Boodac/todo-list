@@ -69,9 +69,13 @@ export const taskCollection = (function (){
 
     const load = (loaderArray) => {
         console.log(loaderArray);
-    }
+    };
+
+    const verify = (refID) => {
+        idMap.set(refID, localStorage.getItem(refID));
+    };
 
     idMap.set(RootCollection.refID, RootCollection.myTasks);
 
-    return { add, get, remove, load };
+    return { add, get, remove, load, verify };
 })();
