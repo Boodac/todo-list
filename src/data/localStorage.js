@@ -14,12 +14,12 @@ const storageReference = (function (){
             store.removeItem(TEST_STRING);
             return true;
         } catch (error) {
-            return (error instanceof DOMException && error.name === "QuotaExceededError" && storage && storage.length !== 0);
+            return (error instanceof DOMException && error.name === "QuotaExceededError" && store && store.length !== 0);
         };
     };
 
     const checkConfig = (storageObject) => {
-        if(!storageObject.getItem(configurations[0][0]) populate(storageObject);
+        if(!storageObject.getItem(configurations[0][0])) populate(storageObject);
     };
 
     if(storageVerified()) {
