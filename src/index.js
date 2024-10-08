@@ -1,6 +1,7 @@
 import { css, reset } from "./assets/index.js";
 import { loadIcons } from "./display/index.js";
 import { initClickHandlers } from "./events/index.js";
+import "./tests/test.js";
 
 if(css && reset) {
     console.log("Load: success.");

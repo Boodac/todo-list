@@ -1,3 +1,16 @@
+/*
+
+import {loadStorage} from "../data/dataMediator.js";
+import { taskCollection } from "../data/index.js";
+
+loadStorage();
+
+console.log(localStorage);
+
+console.log(taskCollection);
+
+/*
+
 import { buildTask, taskCollection } from "../data/index.js";
 
 const newTask = buildTask().result();

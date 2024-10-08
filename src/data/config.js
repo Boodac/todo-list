@@ -4,5 +4,5 @@ export const configurations = [
     ["avatar", "default"],
     ["theme", "light"],
     ["myTasks", "[]"],
-    ["tags", "[]"]
+    ["tags", "[]"],
 ];
