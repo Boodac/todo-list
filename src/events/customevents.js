@@ -1,6 +1,6 @@
-export const newTaskEvent = (htmlElement) => {
-    const newTaskEvent = new CustomEvent("newtask", {
-        detail: htmlElement
+export const newTaskEvent = (taskObject) => {
+    const newMyTaskItem = new CustomEvent("newtask", {
+        detail: taskObject
     })
-    return newTaskEvent;
+    return newMyTaskItem;
 };

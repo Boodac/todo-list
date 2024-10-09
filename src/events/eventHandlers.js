@@ -42,7 +42,7 @@ export function initClickHandlers() {
 
 export function initNewTaskHandlers() {
     elements.myTasks.list.addEventListener("newtask", (e) => {
-        elements.myTasks.list.appendChild(e.detail);
+        elements.myTasks.list.appendChild(elements.myTasks.createListItem(e.detail));
     });
 }
 

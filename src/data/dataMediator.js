@@ -17,7 +17,11 @@ export function addNewTask(newTaskObject) {
     const newTask = buildTask(newTaskObject).result();
     localStorage.setItem(newTask.refID, newTask.convertToJSON());
     taskCollection.add(newTask);
-    if(newTask.parents.indexOf("myTasks") !== -1) elements.myTasks.list.dispatchEvent(newTaskEvent(elements.myTasks.createListItem(newTask)));
+    newTask.parents.forEach(parent => {
+        updateTask(parent, "parents", newTask.refID);
+    });
+    if(newTask.parents.indexOf("myTasks") !== -1) 
+        elements.myTasks.list.dispatchEvent(newTaskEvent(newTask));
 };
 
 export function loadStorage() {
@@ -30,10 +34,15 @@ export function loadStorage() {
     };
 };
 
-export function loadMyTaskSidebar() {
+export function loadSidebar() {
     const myTasks = taskCollection.get("myTasks");
     for(let i = 0 ; i < myTasks.length ; i++) {
-        const listItem = elements.myTasks.createListItem(taskCollection.get(myTasks[i]));
-        elements.myTasks.list.dispatchEvent(newTaskEvent(listItem));
+        elements.myTasks.list.dispatchEvent(newTaskEvent(myTasks[i]));
     };
+};
+
+function updateTask(task, parameter, value) {
+    console.log(task);
+    console.log(parameter);
+    console.log(value);
 };
