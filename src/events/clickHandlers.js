@@ -26,9 +26,11 @@ export function initClickHandlers() {
         event.preventDefault();
         if(!elements.forms.addTask.title.value.trim()) {
             elements.forms.addTask.title.classList.add("required");
+            elements.modals.addTaskForm.classList.add("required");
             return;
         } else {
             elements.forms.addTask.title.classList.remove("required");
+            elements.modals.addTaskForm.classList.remove("required");
         }
         captureAddTaskForm();
     });
@@ -55,12 +57,15 @@ function captureAddTaskForm() {
         };
 
         if(captured[input].nodeName === "SELECT") {
-            if(captured[input].multiple) {
-                for(const option of captured[input].children) {
-                    if(option.selected) newTask.parents.push(option.dataset.id);
-                }
-            } else {
-                newTask[captured[input].name] = captured[input].value;
+            switch(captured[input].type) {
+                case "select-one":
+                    newTask[captured[input].name] = captured[input].value;
+                    break;
+                case "select-multiple":
+                    for(const option of captured[input].children) {
+                        if(option.selected) newTask.parents.push(option.dataset.id);
+                    }
+                    break;
             }
         };
 
@@ -68,6 +73,10 @@ function captureAddTaskForm() {
             if(captured[input].value) newTask[captured[input].name] = captured[input].value;
         };
     }
-    console.log(newTask);
+
+    captured.reset();
     toggleDisplay(elements.modals.addTaskForm, "grid");
+
+
+    console.log(newTask);
 };

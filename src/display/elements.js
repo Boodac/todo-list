@@ -45,6 +45,7 @@ export const forms = (function () {
         const parents = document.querySelector("#add-task-parents");
         
         function reset() {
+            elements.modals.addTaskForm.classList.remove("required");
             title.value = "";
             title.classList.remove("required");
             description.value = "";
@@ -54,10 +55,10 @@ export const forms = (function () {
             dueDate.value = "";
             autodelete.checked = true;
             notes.value = "";
-            for(const children of parents) {
-                if(children.dataset.id === "myTasks") children.selected = true;
-                else children.selected = false;
-            }
+            for(const child of parents) {
+                if(child.dataset.id === "myTasks") child.selected = true;
+                else child.selected = false;
+            };
         }
         return { title, description, priority, frequency, assignDueDate, dueDate, autodelete, notes, parents, reset };        
     })();

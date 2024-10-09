@@ -89,6 +89,10 @@ textarea:not(:placeholder-shown) {
   display: none;
 }
 
-.required {
+form.required {
+  outline: 4px solid rgb(224, 172, 0);
+}
+
+input.required {
   outline: 2px solid red;
 }
