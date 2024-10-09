@@ -11,13 +11,14 @@ body > * {
 }
 
 aside {
+  position: relative;
   background-color: #5c15df;
   min-height: 100vh;
-  min-height: 100dvh;
   color: white;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: min-content;
+  grid-template-rows: min-content min-content;
+  gap: 1rem;
 }
 
 .icon-container {
@@ -48,4 +49,46 @@ nav > .icon-container {
 
 .icon {
   aspect-ratio: 1;
+}
+
+#add-task-form {
+  background-color: #5c15df;
+  position: absolute;
+  left: 100%;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  margin: 5vh 1rem;
+  display: none;
+  z-index: 1;
+  gap: 1rem;
+  width: 150%;
+}
+
+#add-task-submit {
+  z-index: 2;
+}
+
+.form-section {
+  display: grid;
+  gap: 0.25rem;
+}
+
+input, textarea {
+  background-color: rgb(240, 240, 240);
+}
+
+input:focus, textarea:focus {
+  background-color: white;
+}
+
+textarea:not(:placeholder-shown) {
+  height: 6em;
+}
+
+#dueDateBox {
+  display: none;
+}
+
+.required {
+  outline: 2px solid red;
 }
