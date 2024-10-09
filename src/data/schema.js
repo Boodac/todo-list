@@ -8,7 +8,7 @@ export const schema = {
     children: [],
     parents: [],
     tags: [],
-    status: "incomplete",
+    status: "to do",
     refID: false,
     autodelete: true,
 };
