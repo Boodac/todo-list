@@ -1,3 +1,4 @@
+import { addNewTask } from "../data/index.js";
 import { elements, toggleDisplay } from "../display/index.js";
 
 export function initClickHandlers() {
@@ -77,6 +78,5 @@ function captureAddTaskForm() {
     captured.reset();
     toggleDisplay(elements.modals.addTaskForm, "grid");
 
-
-    console.log(newTask);
+    addNewTask(newTask);
 };

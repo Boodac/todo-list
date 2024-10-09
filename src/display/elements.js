@@ -1,4 +1,4 @@
-export const icons = (function() {
+const icons = (function() {
     const addTask = document.querySelector("#addtaskIcon");
     const today = document.querySelector("#todayIcon");
     const upcoming = document.querySelector('#upcomingIcon');
@@ -9,7 +9,7 @@ export const icons = (function() {
     return { addTask, today, upcoming, settings, filters, myTasks };
 })();
 
-export const buttons = (function() {
+const buttons = (function() {
     const addTask = document.querySelector("#addtaskBtn");
     const today = document.querySelector("#todayBtn");
     const upcoming = document.querySelector('#upcomingBtn');
@@ -26,13 +26,13 @@ export const buttons = (function() {
     };
 })();
 
-export const modals = (function () {
+const modals = (function () {
     const addTaskForm = document.querySelector("#add-task-form");
     const dueDateBox = document.querySelector("#dueDateBox");
     return { addTaskForm, dueDateBox };
 })();
 
-export const forms = (function () {
+const forms = (function () {
     const addTask = (function() {
         const title = document.querySelector("#add-task-title");
         const description = document.querySelector("#add-task-description");
@@ -66,9 +66,18 @@ export const forms = (function () {
     return { addTask };
 })();
 
+const myTasks = (function() {
+    const button = document.querySelector("#myTasks");
+    function add(child) {
+        button.appendChild(child);
+    }
+    
+    return { button, add, refresh };
+})();
+
 function isVisible(element) {
     if(element.style.display === "none") return false;
     else return true;
 }
 
-export const elements = { icons, buttons, modals, forms, isVisible };
+export const elements = { icons, buttons, modals, forms, isVisible, myTasks };

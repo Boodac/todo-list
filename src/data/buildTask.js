@@ -6,15 +6,13 @@ import { conformTaskToSchema } from "./index.js";
 // will gracefully accept any JSON or JS object as a template and conform it to the schema.
 // do not use this to edit tasks! use the changetask module instead.
  
-export default function (obj = schema, assignNewID = false) {
+export default function (obj = schema) {
     let taskStructure = {};
 
     if(typeof obj === "string") {
         taskStructure = JSON.parse(obj);
-    }
-    else {
+    } else {
         taskStructure = conformTaskToSchema(obj);
-        assignNewID = true;
     };
     
     const refID = UUID();
@@ -63,7 +61,7 @@ export default function (obj = schema, assignNewID = false) {
             return this;
         },
         result() {
-            if(assignNewID) {
+            if(!this.taskObject.refID) {
                 Object.defineProperty(this.taskObject, "refID", {
                     value: refID,
                     enumerable: true,
@@ -79,7 +77,7 @@ export default function (obj = schema, assignNewID = false) {
                 configurable: false,
                 writable: false
             });
-            return Object.freeze(this.taskObject);
+            return Object.seal(this.taskObject);
         },
     }
 

@@ -11,12 +11,12 @@ export const schema = {
     status: "to do",
     refID: false,
     autodelete: true,
+    type: "task"
 };
 
 export function conformTaskToSchema(taskObject) {
     let clone = {};
     for(const parameter in schema) {
-        if(parameter === "refID") continue;
         if(taskObject[parameter]) clone[parameter] = taskObject[parameter];
         else clone[parameter] = schema[parameter];
     }
