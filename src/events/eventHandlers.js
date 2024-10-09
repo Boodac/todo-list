@@ -52,15 +52,16 @@ function captureAddTaskForm() {
 
     for(const input in captured) {
         if(captured[input].nodeName === "INPUT") {
-            if(captured[input].type === "text") {
-                if(captured[input].value) newTask[captured[input].name] = captured[input].value;
-            } 
-            else if(captured[input].type === "datetime-local") {
-                if(newTask.applyDueDate) newTask[captured[input].name] = captured[input].value;
+            switch(captured[input].type) {
+                case "text":
+                    if(captured[input].value) newTask[captured[input].name] = captured[input].value;
+                    break;
+                case "datetime-local":
+                    if(newTask.applyDueDate) newTask[captured[input].name] = captured[input].value;
+                    break;
+                case "checkbox":
+                    if(captured[input].value) newTask[captured[input].name] = captured[input].checked;
             }
-            else {
-                if(captured[input].value) newTask[captured[input].name] = captured[input].checked;
-            } 
         };
 
         if(captured[input].nodeName === "SELECT") {
