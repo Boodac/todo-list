@@ -9,6 +9,6 @@ if(css && reset) {
 
 loadIcons();
 initClickHandlers();
-initNewTaskHandlers();
 loadStorage();
+initNewTaskHandlers();
 loadSidebar();

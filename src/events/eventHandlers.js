@@ -1,12 +1,15 @@
 import { addNewTask } from "../data/index.js";
 import { elements, toggleDisplay } from "../display/index.js";
+import { newTaskEvent } from "./customevents.js";
 
 export function initClickHandlers() {
     const EVENT_TYPE = "click";
     elements.buttons.addTask.addEventListener(EVENT_TYPE, (e) => {
         toggleDisplay(elements.modals.addTaskForm, "grid");
-        if(elements.isVisible(elements.modals.addTaskForm)) elements.forms.addTask.title.focus();
-        else elements.forms.addTask.reset();
+        if(elements.isVisible(elements.modals.addTaskForm)) {
+            elements.forms.addTask.title.focus();
+            elements.forms.addTask.updateParentOptions();
+        } else elements.forms.addTask.reset();
     });
     elements.buttons.filters.addEventListener(EVENT_TYPE, (e) => {
         console.log(e);

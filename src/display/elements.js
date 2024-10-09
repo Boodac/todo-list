@@ -45,9 +45,26 @@ const forms = (function () {
         const autodelete = document.querySelector("#add-task-autodelete");
         const notes = document.querySelector("#add-task-notes");
         const parents = document.querySelector("#add-task-parents");
+        
         const updateParentOptions = () => {
+            parents.textContent = "";
+            const myTaskOption = document.createElement("option");
+            myTaskOption.value = "myTasks";
+            myTaskOption.dataset.id = "myTasks";
+            myTaskOption.textContent = "myTasks";
+            myTaskOption.selected = true;
+            parents.appendChild(myTaskOption);
+
             const myTasks = taskCollection.get("myTasks");
             console.log(myTasks);
+            myTasks.forEach(refID => {
+                let task = taskCollection.get(refID);
+                const option = document.createElement("option");
+                option.value = task.title;
+                option.dataset.id = refID;
+                option.textContent = task.title;
+                parents.appendChild(option);
+            });
         }
         
         function reset() {

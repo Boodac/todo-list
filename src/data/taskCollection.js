@@ -61,14 +61,11 @@ export const taskCollection = (function (){
     };
 
     function hotSwap(refID) {
+        if(refID === "myTask") return;
         let entry = idMap.get(refID);
         let resultingObject = buildTask(entry).result();
         idMap.delete(refID);
         idMap.set(refID, resultingObject);
-    };
-
-    const load = (loaderArray) => {
-        console.log(loaderArray);
     };
 
     const verify = (refID) => {
@@ -77,5 +74,5 @@ export const taskCollection = (function (){
 
     idMap.set(RootCollection.refID, RootCollection.myTasks);
 
-    return { add, get, remove, load, verify };
+    return { add, get, remove, verify };
 })();
