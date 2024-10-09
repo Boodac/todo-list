@@ -1,3 +1,5 @@
+import { taskCollection } from "../data";
+
 const icons = (function() {
     const addTask = document.querySelector("#addtaskIcon");
     const today = document.querySelector("#todayIcon");
@@ -67,12 +69,27 @@ const forms = (function () {
 })();
 
 const myTasks = (function() {
-    const button = document.querySelector("#myTasks");
-    function add(child) {
-        button.appendChild(child);
-    }
-    
-    return { button, add, refresh };
+    const list = document.querySelector("#myTasks");
+    const container = document.querySelector("#myTaskContainer");
+
+    function createListItem(item) {
+        let listItem = document.createElement("li");
+        listItem.classList.add("myTask-item");
+        
+        let itemName = document.createElement("p");
+        itemName.classList.add("item-name");
+        itemName.textContent = item.title;
+        
+        let itemType = document.createElement("p");
+        itemType.classList.add("item-type");
+        itemType.textContent = item.type;
+
+        listItem.appendChild(itemName);
+        listItem.appendChild(itemType);
+        return listItem;
+    };
+
+    return { list, container, createListItem };
 })();
 
 function isVisible(element) {

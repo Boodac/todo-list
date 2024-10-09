@@ -1,6 +1,6 @@
 import { css, reset } from "./assets/index.js";
 import { loadIcons } from "./display/index.js";
-import { initClickHandlers } from "./events/index.js";
+import { initClickHandlers, initNewTaskHandlers } from "./events/index.js";
 import { loadStorage, loadMyTaskSidebar } from "./data/index.js";
 
 if(css && reset) {
@@ -9,5 +9,6 @@ if(css && reset) {
 
 loadIcons();
 initClickHandlers();
+initNewTaskHandlers();
 loadStorage();
 loadMyTaskSidebar();

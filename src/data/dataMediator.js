@@ -1,5 +1,6 @@
 import { localStorage, taskCollection, buildTask, configurations } from "./index.js";
 import { elements } from "../display/elements.js";
+import { newTaskEvent } from "../events/customevents.js";
 
 /*
 on load move data from localStorage into taskCollection
@@ -16,6 +17,7 @@ export function addNewTask(newTaskObject) {
     const newTask = buildTask(newTaskObject).result();
     localStorage.setItem(newTask.refID, newTask.convertToJSON());
     taskCollection.add(newTask);
+    if(newTask.parents.indexOf("myTasks") !== -1) elements.myTasks.list.dispatchEvent(newTaskEvent(elements.myTasks.createListItem(newTask)));
 };
 
 export function loadStorage() {
@@ -31,22 +33,7 @@ export function loadStorage() {
 export function loadMyTaskSidebar() {
     const myTasks = taskCollection.get("myTasks");
     for(let i = 0 ; i < myTasks.length ; i++) {
-        let item = taskCollection.get(myTasks[i]);
-        console.log(item);
-
-        let listItem = document.createElement("li");
-        listItem.classList.add("myTask-item");
-        
-        let itemName = document.createElement("p");
-        itemName.classList.add("item-name");
-        itemName.textContent = item.title;
-        
-        let itemType = document.createElement("p");
-        itemType.classList.add("item-type");
-        itemType.textContent = item.type;
-
-        listItem.appendChild(itemName);
-        listItem.appendChild(itemType);
-        elements.myTasks.add(listItem);
+        const listItem = elements.myTasks.createListItem(taskCollection.get(myTasks[i]));
+        elements.myTasks.list.dispatchEvent(newTaskEvent(listItem));
     };
 };
