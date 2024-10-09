@@ -1,3 +1,5 @@
+import { taskCollection } from "../data";
+
 const icons = (function() {
     const addTask = document.querySelector("#addtaskIcon");
     const today = document.querySelector("#todayIcon");
@@ -43,6 +45,10 @@ const forms = (function () {
         const autodelete = document.querySelector("#add-task-autodelete");
         const notes = document.querySelector("#add-task-notes");
         const parents = document.querySelector("#add-task-parents");
+        const updateParentOptions = () => {
+            const myTasks = taskCollection.get("myTasks");
+            console.log(myTasks);
+        }
         
         function reset() {
             elements.modals.addTaskForm.classList.remove("required");
@@ -59,8 +65,9 @@ const forms = (function () {
                 if(child.dataset.id === "myTasks") child.selected = true;
                 else child.selected = false;
             };
-        }
-        return { title, description, priority, frequency, assignDueDate, dueDate, autodelete, notes, parents, reset };        
+        };
+
+        return { title, description, priority, frequency, assignDueDate, dueDate, autodelete, notes, parents, reset, updateParentOptions };        
     })();
 
     return { addTask };
