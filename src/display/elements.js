@@ -1,5 +1,3 @@
-import { taskCollection } from "../data";
-
 const icons = (function() {
     const addTask = document.querySelector("#addtaskIcon");
     const today = document.querySelector("#todayIcon");

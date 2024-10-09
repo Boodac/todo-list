@@ -77,5 +77,5 @@ export const taskCollection = (function (){
 
     idMap.set(RootCollection.refID, RootCollection.myTasks);
 
-    return { add, get, remove, load, verify, idMap };
+    return { add, get, remove, load, verify };
 })();
