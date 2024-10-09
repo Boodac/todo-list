@@ -40,6 +40,12 @@ export function initClickHandlers() {
     })
 };
 
+export function initNewTaskHandlers() {
+    elements.myTasks.list.addEventListener("newtask", (e) => {
+        elements.myTasks.list.appendChild(e.detail);
+    });
+}
+
 function captureAddTaskForm() {
     const newTask = {parents:[]};
     const captured = elements.forms.addTask;
